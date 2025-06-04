@@ -4,7 +4,8 @@ Welcome to my **Machine Learning Portfolio**!
 This repository showcases a curated selection of my machine learning and data science projects and learning documentation, demonstrating skills in data analysis, model development, and real-world application.
 
 ---
-
+> ⭐ **If you find this repository helpful, please consider giving it a star to show your support!** ⭐
+---
 ## 📂 Repository Structure
 
 ```
@@ -65,3 +66,4 @@ Feel free to fork this repo and submit a pull request.
 ---
 
 > _Inspired by curiosity, built with passion!_
+<p align="center"> Made with ❤️ by <strong>kar137</strong> </p>
