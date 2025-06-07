@@ -1,52 +1,79 @@
-## 🔁 Logistic Regression Overview
-- Similar to linear regression but uses **sigmoid (logistic)** function for classification.
-- Prediction formula:  
-  \\( \hat{P} = h_w(x) = \sigma(w^T x) \\)
+
+# Binary Classification
+
+
+## Logistic Regression Overview
+
+In logistic regression, the model predicts probabilities for binary classification. The model is:
+
+    ŷ = h_w(x) = σ(wᵀx)
+
+Where:
+- ŷ is the predicted probability
+- σ is the sigmoid function
+- wᵀx is the linear combination of weights and inputs
 
 ---
 
-## 📈 Sigmoid Function
-\\( \sigma(z) = \frac{1}{1 + e^{-z}} \\)
-- Maps input to range (0, 1)
-- Acts as a probability estimator
-- Predict class:
-  - \\( \hat{y} = 1 \\) if \\( \hat{P} \geq 0.5 \\)
-  - \\( \hat{y} = 0 \\) if \\( \hat{P} < 0.5 \\)
+## Sigmoid Function
+
+The sigmoid (logistic) function maps inputs to the (0,1) range:
+
+    σ(z) = 1 / (1 + exp(-z))
+
+- If σ(z) >= 0.5 → predict class 1
+- If σ(z) <  0.5 → predict class 0
 
 ---
 
 ## Cost Function
 
-### Why not SSE?
-- SSE (used in linear regression) is **non-convex** in logistic regression → gradient descent may fail to converge.
+Squared Error is not suitable for logistic regression because it creates a non-convex function.
 
-### Binary Cross Entropy (BCE)
-- Cost for single sample:
-  \\( \text{Cost}(h_w(x), y) = -[y \log(h_w(x)) + (1 - y) \log(1 - h_w(x))] \\)
-- For all m samples:
-  \\( J(w) = -\frac{1}{m} \sum_{i=1}^{m} [y^{(i)} \log(\hat{y}^{(i)}) + (1 - y^{(i)}) \log(1 - \hat{y}^{(i)})] \\)
-  where \\( \hat{y}^{(i)} = \sigma(w^T x^{(i)}) \\)
+Instead, use **Binary Cross-Entropy (BCE)**:
+
+For individual examples:
+- If y = 1:  Cost = -log(ŷ)
+- If y = 0:  Cost = -log(1 - ŷ)
+
+Unified form:
+
+    Cost = -[y * log(ŷ) + (1 - y) * log(1 - ŷ)]
+
+Overall cost (for m examples):
+
+    J(w) = -(1/m) * Σ [yᵢ * log(ŷᵢ) + (1 - yᵢ) * log(1 - ŷᵢ)]
 
 ---
 
-## Gradient Descent for BCE
+## Gradient Descent
 
-Let \\( z = w^T x + b \\, a = \sigma(z) = \hat{y} \\)
+To minimize the BCE loss:
 
-### Derivative of loss w.r.t. \\( w_j \\):
-\\( \frac{\partial J}{\partial w_j} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y}^{(i)} - y^{(i)}) x_j^{(i)} \\)
+Let:
+- z = w₁x₁ + w₂x₂ + ... + b
+- a = σ(z)
+- J(a, y) = -[y * log(a) + (1 - y) * log(1 - a)]
 
-### Update rule (Equation 4):
-\\( w_j := w_j - \alpha \frac{\partial J}{\partial w_j} \\)
+The gradients:
 
-### Update for all parameters:
-\\( w := w - \alpha \nabla J(w) \\)
+    ∂J/∂wⱼ = (1/m) * Σ [(aᵢ - yᵢ) * xⱼ]
+
+Parameter update rule:
+
+    wⱼ = wⱼ - α * ∂J/∂wⱼ
+
+    b   = b - α * ∂J/∂b
+
+Where:
+- α is the learning rate
+- m is the number of training examples
 
 ---
 
 ## Key Takeaways
-- **Sigmoid function** outputs probability → great for binary classification.
-- **Binary Cross Entropy** is a suitable cost function due to its **convexity**.
-- No closed-form solution for optimal weights, but **gradient descent** works reliably.
-- Proper choice of learning rate \\( \alpha \\) and iterations is crucial for convergence.
+
+- The sigmoid function is ideal for probability estimation in binary classification.
+- Binary Cross-Entropy is used as a convex cost function.
+- Gradient Descent helps optimize weights with guaranteed global minimum (if properly tuned).
 
