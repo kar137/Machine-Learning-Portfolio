@@ -22,11 +22,12 @@ Analogy: Walking down a foggy hill, feeling the slope and stepping downward.
 
 ## Gradient Descent Algorithm
 
-To minimize a real-valued function \(f: \mathbb{R}^n \to \mathbb{R}\):
+To minimize a real-valued function f: R^n → R:
 
-1. Initialize \(x\) randomly
-2. Calculate gradient \(\frac{\partial f(x)}{\partial x}\)
-3. Update: \(x := x - \alpha \frac{\partial f(x)}{\partial x}\)
+1. Initialize x randomly  
+2. Calculate gradient: ∂f(x)/∂x  
+3. Update:  
+   x := x - α * ∂f(x)/∂x  
 4. Repeat until convergence
 
 ## Code Implementation
