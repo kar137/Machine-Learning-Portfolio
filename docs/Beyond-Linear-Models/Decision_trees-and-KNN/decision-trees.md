@@ -72,3 +72,53 @@ These metrics help **quantify the "impurity"** or disorder in the data.
 \]
 
 Where \( P_i \) = proportion of samples belonging to class i.
+
+# 📉 Impurity Metrics for Continuous Attributes
+
+---
+
+## 🎯 Goal
+
+Identify the best threshold for continuous features by minimizing impurity (e.g., Gini Index).
+
+---
+
+## 📊 Example Dataset
+
+| Income (k$) | Net Worth (M$) | Repay? |
+|-------------|----------------|--------|
+| 120         | 2.5            | Yes    |
+| 250         | 1.0            | Yes    |
+| 130         | 1.0            | No     |
+| 80          | 3.0            | Yes    |
+
+---
+
+## ⚙️ Steps to Find Best Split
+
+### 1. Sort unique values of the attribute:
+`Net Worth = [1.0, 2.5, 3.0]`
+
+### 2. Compute midpoints:
+`Thresholds = [1.75, 2.75]`
+
+---
+
+### 3. Evaluate Gini at each threshold:
+
+**Split at 1.75**
+
+- Left (≤1.75): [Yes, No] → Gini = 0.5  
+- Right (>1.75): [Yes, Yes] → Gini = 0.0  
+- Weighted Gini = (2/4)*0.5 + (2/4)*0 = **0.25**
+
+Choose the threshold with the **lowest Gini**.
+
+---
+
+## 🧪 Gini Function
+
+```python
+def compute_gini(class_freqs):
+    probs = class_freqs / np.sum(class_freqs)
+    return 1 - np.sum(probs**2)
