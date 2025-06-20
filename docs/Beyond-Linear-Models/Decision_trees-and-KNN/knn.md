@@ -56,3 +56,49 @@ In a restaurant dataset with features like food quality and service, to predict 
 - Using `K = 3`, compare a test restaurant with all stored ones.
 - Find the 3 most similar ones.
 - Predict based on the majority outcome among those 3.
+
+# K-NN Classifier: Summary
+
+## How K-NN Classifier Works
+- **Training Phase**: Store training data (no actual learning happens)
+- **Prediction Phase**:
+  1. Compute distances from the test sample to all training samples
+  2. Select **K** nearest neighbors
+  3. Predict label via **majority vote** from K neighbors
+
+---
+
+## Key Implementation Steps
+- Use **Euclidean distance** to measure similarity
+- Predict with `mode()` of neighbor labels
+- Time complexity ≈ **O(knm)** for brute-force (n: samples, m: features)
+
+---
+
+## Impact of K
+
+| Value of K     | Bias | Variance | Decision Boundary  |
+|----------------|------|----------|--------------------|
+| Small (e.g. 1) | Low  | High     | Complex, jagged    |
+| Large (e.g. 100) | High | Low    | Smooth, linear     |
+
+- **Trade-off**:  
+  - Small K → overfitting  
+  - Large K → underfitting  
+- **Ideal K** is chosen by balancing bias and variance
+
+---
+
+## Performance Example
+On the **Iris dataset**, the K-NN classifier achieved:
+- **97% accuracy** on training data
+- **96% accuracy** on test data
+
+---
+
+## Applications
+- **Face recognition** (e.g., HertaSecurity)
+- **Text/Image/Video classification**
+- **Recommender systems**
+- **Outlier detection** (e.g., traffic anomaly detection)
+
