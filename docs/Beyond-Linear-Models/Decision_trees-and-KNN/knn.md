@@ -102,3 +102,76 @@ On the **Iris dataset**, the K-NN classifier achieved:
 - **Recommender systems**
 - **Outlier detection** (e.g., traffic anomaly detection)
 
+# K-NN Regression: Summary
+
+## How K-NN Regression Works
+- Stores training data (no training step)
+- Predicts by averaging `K` nearest neighbor target values
+- Uses Euclidean distance for measuring similarity
+
+---
+
+## Implementation Highlights
+- Object-oriented Python class: `Knnregression`
+- Key methods:
+  - `fit`: Stores training data
+  - `_calculate_euc_dist_mat`: Efficient distance calculation using vectorization
+  - `predict`: Finds nearest neighbors and returns their mean
+
+---
+
+## Performance Example
+- Dataset: Boston House Prices
+- Performance (MSE):
+  - K-NN (K=4): Train = **11.91**, Test = **19.80**
+  - Linear Regression: Train = **21.64**, Test = **24.29**
+
+---
+
+## Decision Function Behavior
+- K-NN: Non-linear, stepwise, sensitive to K value
+- K=1: High variance, low bias  
+- K=10: Low variance, high bias
+
+---
+
+## Linear vs K-NN Regression
+
+| Dataset Type     | Best Model              |
+|------------------|-------------------------|
+| Linear           | Linear Regression       |
+| Slightly Nonlinear | Depends on K, can be K-NN |
+| Highly Nonlinear | K-NN Regression         |
+
+- K-NN suffers in high dimensions (curse of dimensionality)
+- Linear regression is simpler, more interpretable
+
+---
+
+## Applications of K-NN Regression
+- Imputing missing values (`KNNImputer` in sklearn)
+- Image reconstruction
+- 3D modeling
+- Baseline models for stock price or glucose prediction
+
+---
+
+## Pros
+- Simple, intuitive
+- No training time
+- Adapts to non-linearity
+- Good for online learning
+
+## Cons
+- Poor in high dimensions
+- Requires feature scaling
+- Sensitive to noise/outliers
+- Slow for large datasets (brute-force search)
+
+---
+
+## Key Takeaways
+- K-NN regression predicts by **averaging K nearest targets**
+- Works better on **non-linear, low-dimensional data**
+- Linear regression preferred for **high-dimensional** or **linear** problems
+- Use K-NN for **imputation, reconstruction**, and as a **baseline model**
