@@ -175,3 +175,4 @@ On the **Iris dataset**, the K-NN classifier achieved:
 - Works better on **non-linear, low-dimensional data**
 - Linear regression preferred for **high-dimensional** or **linear** problems
 - Use K-NN for **imputation, reconstruction**, and as a **baseline model**
+
