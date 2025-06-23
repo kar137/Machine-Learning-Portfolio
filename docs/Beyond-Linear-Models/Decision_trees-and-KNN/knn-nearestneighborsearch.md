@@ -91,3 +91,67 @@ Given a set of 2D points:
 ## Disadvantages
 - Not effective in high dimensions (curse of dimensionality)
 - Complex implementation
+
+# 🔵 Ball Tree - Summary for Interview
+
+## ✅ Prerequisites
+
+## What is a Ball Tree?
+A **Ball Tree** is a binary tree structure where:  
+- Each **node (ball)** represents a subset of points enclosed in a hypersphere.  
+- Each ball has a **centroid (pivot)** and a **radius** equal to the farthest point from the centroid.
+
+---
+
+## Ball Tree Construction Algorithm
+
+1. Pick a **random point** `xt` from the dataset.  
+2. Find the **farthest point** `p1` from `xt`.  
+3. Find the farthest point `p2` from `p1`.  
+4. Project all points on the vector `p1 → p2`.  
+5. Find the **median** of projections → splits data into two.  
+6. Compute **centroids** for both halves (`c1`, `c2`).  
+7. Draw **balls** (hyperspheres) from centroids with radii to their farthest point.  
+8. Repeat recursively to build the tree.
+
+---
+
+## Nearest Neighbor Search (Greedy DFS)
+
+- Traverse the tree using **depth-first search**.  
+- At each node, compare the **distance to the centroid** and **radius**.  
+- **Prune** branches that cannot contain a closer point (based on triangle inequality).  
+- Maintain a set of best candidate points (`k-NN`).
+
+---
+
+## Properties
+
+- `child1 ∩ child2 = ∅` → no overlap in points  
+- `child1 ∪ child2 = parent node points`  
+- Each node stores: centroid, radius
+
+---
+
+## Advantages
+
+- Better than KD-Tree in **high-dimensional** or **manifold-structured** data.  
+- Can handle **non-axis-aligned** partitions.
+
+---
+
+## Disadvantages
+
+- **Imbalanced splits** due to median on projections.  
+- **Sensitive to outliers** (farthest point based).  
+- Still suffers from **curse of dimensionality** in extreme cases.
+
+---
+
+## Time Complexity
+
+- Each split: `O(n)`  
+- Search (approximate k-NN): depends on depth, typically faster than brute-force.
+
+
+
