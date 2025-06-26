@@ -1,84 +1,115 @@
-# 🤖 Naive Bayes
+## Part 1: Maximum Margin Classifier (SVM Basics)
 
-## Discriminative vs Generative Models
+### What is SVM?
+- SVM is a **supervised machine learning algorithm** used for **classification** and **regression**.
+- It finds the **optimal hyperplane** that **maximizes the margin** between two classes.
 
-| Model Type       | Description |
-|------------------|-------------|
-| **Discriminative** | Learns decision boundary `P(y|X)` (e.g., logistic regression) |
-| **Generative**     | Models `P(X|y)` and uses Bayes’ theorem to compute `P(y|X)` (e.g., Naive Bayes) |
+### Key Terms:
+| Term              | Description                                                      |
+|-------------------|------------------------------------------------------------------|
+| **Hyperplane**    | Decision boundary separating two classes.                        |
+| **Margin**        | Distance between hyperplane and nearest data points from each class (support vectors). |
+| **Support Vectors** | Data points that lie closest to the hyperplane.                 |
+| **Gutter**        | The two lines parallel to the hyperplane at margin distance.     |
 
----
+### Geometric Interpretation:
+For a point `x` with label `y ∈ {-1, +1}`:
 
-## Bayes Theorem
+- Decision condition:  
+  **yᵢ (wᵀxᵢ + b) ≥ 1**
 
-\[
-P(y|X) = \frac{P(X|y) \cdot P(y)}{P(X)}
-\]
+Where:
+- `w` = weight vector (defines orientation of hyperplane)
+- `b` = bias (offset from origin)
 
-- `P(y|X)`: Posterior  
-- `P(y)`: Prior  
-- `P(X|y)`: Likelihood  
-- `P(X)`: Evidence (constant across classes, often ignored)
+### Margin Width Formula:
+```
+Margin Width = 2 / ||w||
+```
 
----
+### SVM Optimization Objective:
+- **Minimize:**  
+```
+(1/2) * ||w||²
+```
+- **Subject to constraint:**  
+```
+yᵢ (wᵀxᵢ + b) ≥ 1
+```
+This is a **Quadratic Programming (QP)** problem.
 
-## Naive Bayes Assumption
-
-Naive Bayes assumes **feature independence**:
-
-\[
-P(x_1, x_2, ..., x_n | y) = \prod_{i=1}^{n} P(x_i | y)
-\]
-
-**Prediction:**
-
-\[
-\hat{y} = \arg\max_y P(y) \cdot \prod_{i=1}^n P(x_i|y)
-\]
-
----
-
-## Naive Bayes Variants
-
-| Variant | When to Use | Example Use Cases | Scikit-Learn |
-|--------|-------------|-------------------|--------------|
-| **GaussianNB** | Continuous features (assumed normal distribution) | Iris dataset | `GaussianNB` |
-| **MultinomialNB** | Discrete counts (e.g., word frequency) | Text classification (TF/TF-IDF) | `MultinomialNB` |
-| **BernoulliNB** | Binary features (0/1) | Spam detection | `BernoulliNB` |
-| **ComplementNB** | For imbalanced text data | Text classification with imbalanced classes | `ComplementNB` |
+### Visualization Example:
+- Used **cvxopt** library for solving QP.
+- Plotted hyperplane, margins, and support vectors.
 
 ---
 
-## Example: Spam Detection
+## Part 2: Kernels in SVM (For Non-Linearly Separable Data)
 
-Given:
-- `P(spam) = 0.4`, `P(non-spam) = 0.6`
-- `P(discount|spam) = 0.75`, `P(cheap|spam) = 0.65`
-- `P(discount|non-spam) = 0.15`, `P(cheap|non-spam) = 0.19`
+### Why Kernels?
+- Not all data is linearly separable.
+- Kernels help by implicitly mapping data to a **higher-dimensional space** where it becomes linearly separable.
 
-Message: `"discount and cheap"`
+### Kernel Trick:
+Instead of explicitly transforming data with feature map ϕ(x), we compute:
+```
+k(x, z) = <ϕ(x), ϕ(z)>
+```
+Where:
+- **k(x, z)** = Kernel function (dot product in feature space)
 
-**Compute:**
+### Types of Kernel Construction:
 
-Spam score:  
-\[
-0.75 \cdot 0.65 \cdot 0.4 = 0.195
-\]
+| Method                           | Explanation                                       |
+|----------------------------------|---------------------------------------------------|
+| **Explicit feature mapping (ϕ)** | Manually define a mapping function ϕ(x). |
+| **Direct kernel function**        | Define k(x, z) directly and check positive semi-definiteness (Gram matrix). |
+| **Combining kernels**             | Combine multiple known kernels (linear combination, product, etc.). |
 
-Non-spam score:  
-\[
-0.15 \cdot 0.19 \cdot 0.6 = 0.0171
-\]
+### Common Kernel Functions:
 
- Classify as **Spam** (higher posterior)
+| Kernel Type | Formula | Characteristics |
+|-------------|---------|----------------|
+| Linear Kernel | k(x, z) = xᵀz | Simple, for linear data |
+| Polynomial Kernel | k(x, z) = (1 + xᵀz)ᵈ | Handles non-linear data, degree (d) controls complexity |
+| RBF (Gaussian) Kernel | k(x, z) = exp(-γ ||x-z||²) | Local, non-linear, controlled by γ |
+| Sigmoid Kernel | tanh(α xᵀz + c) | Used in neural networks |
+
+### Kernel Parameters and Their Effect:
+
+| Parameter | Used in | Low Value Effect | High Value Effect |
+|---------- | ------ | --------------- | --------------- |
+| γ (Gamma) | RBF Kernel | Smooth, high bias | Complex, overfit, high variance |
+| d (Degree) | Polynomial Kernel | Simpler model | Flexible, risk of overfit |
+| C | SVM Regularization | More misclassification allowed | Tries to classify all points, risk of overfit |
 
 ---
 
-## Pros
-- Simple, fast, efficient on large datasets
-- Works well with **text data**
-- Performs well even with **feature independence violations**
+## Part 3: Making Predictions with Kernels
+Weight vector `w` expressed in terms of training data and kernels:
+```
+wᵀϕ(x) = yᵀ K⁻¹ kₓ
+```
+Where:
+- **K** = Kernel matrix over training data
+- **kₓ** = Kernel values between training points and the new test point
 
-## Cons
-- Assumes **independent features**
-- Performs poorly with **correlated features**
+---
+
+## Part 4: Key Takeaways for Interview
+
+| Concept | Summary |
+|-------- | ------ |
+| Linear SVM | Maximizes margin, works for linearly separable data |
+| Kernel SVM | Maps data to higher dimensions to separate non-linear data |
+| Support Vectors | Data points closest to the hyperplane, critical for model |
+| Margin Control | Larger margin → better generalization |
+| Hyperparameter Effects | C, gamma, degree (d) control bias-variance tradeoff |
+| Optimization | Solved using Quadratic Programming |
+
+---
+
+## Part 5: Practical Tips
+- Default **C = 1** is often fine for SVM.
+- **Tune C, gamma, and degree** based on cross-validation.
+- Use **RBF kernel** as a starting point for non-linear problems.
