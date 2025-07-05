@@ -212,3 +212,115 @@ Gradient Boosting is an ensemble technique that combines **boosting** with **gra
 - Regression tasks with complex, nonlinear relationships.
 - Classification tasks requiring high accuracy.
 - Scenarios with noisy or outlier-prone data.
+
+
+# ✅ XGBoost Summary
+
+## 📚 Prerequisites
+- Decision Trees and their construction  
+- Working of Gradient Boosting  
+
+---
+
+## 🎯 Learning Objectives
+- Explain XGBoost as a fast and scalable machine learning library.
+- Understand problems with typical decision trees.
+- Understand issues with typical boosting algorithms.
+- Explain how XGBoost solves these issues.
+- List key features of XGBoost.
+
+---
+
+## XGBoost
+**XGBoost (Extreme Gradient Boosting)** is a gradient boosting library focused on speed and performance.
+
+- Published by Chen et al. (2016) in the paper: *XGBoost: A Scalable Tree Boosting System*.
+- Known for winning many ML competitions (e.g., Kaggle, KDD Cup).
+- Supports regression, classification, and ranking tasks.
+
+---
+
+## Problems with Decision Trees (Solved by XGBoost)
+### 1. Greedy Split Finding
+- Decision Trees use greedy methods, which are computationally expensive on large datasets.
+- XGBoost uses **approximate algorithms**:
+  - Uses quantiles as candidate splits (e.g., 10%, 20%, …, 90%).
+  - Reduces computational cost with minimal performance loss.
+- Uses **quantile sketch** (weighted variant) for huge datasets.
+
+### 2. Overfitting
+- Deep trees overfit easily.
+- XGBoost introduces:
+  - Regularization (L1 & L2)
+  - Row and column subsampling.
+
+### 3. Tree Structure Limitation
+- Traditional trees return class labels (not ideal for boosting).
+- XGBoost uses **regression trees**:
+  - Each leaf predicts a real-valued score (weight).
+  - Allows unified handling of classification & regression.
+
+---
+
+## Problems with Boosting (Solved by XGBoost)
+### 1. Sequential Nature
+- Boosting is inherently sequential (slow).
+- XGBoost introduces:
+  - Parallelization (within-tree level, not across trees).
+  - Distributed computing for large datasets.
+
+---
+
+## ✨ Key Features of XGBoost
+### 1. Regularization
+Adds regularization to reduce overfitting:
+Obj = Σ L(yᵢ, Fₜ(xᵢ)) + Ω(hₜ)
+
+Where Ω(h) = γT + ½λ Σ wⱼ²  
+(T = number of leaves, wⱼ = weight at leaf j).
+
+---
+
+### 2. Second-Order Gradient (Taylor Expansion)
+Uses both:
+- **First-order gradient (gᵢ)**  
+- **Second-order gradient (hᵢ, Hessian)**  
+→ Faster convergence than traditional methods.
+
+---
+
+### 3. Sparsity Aware Split Finding
+- Handles missing values natively.
+- Learns default direction during training for missing data.
+
+---
+
+### 4. Stochastic Gradient Boosting
+- Uses **row and column subsampling**:
+  - `colsample_bytree`
+  - `colsample_bylevel`
+  - `colsample_bynode`
+
+---
+
+### 5. Shrinkage (Learning Rate)
+- Dampens contribution of new trees:
+Obj = Σ L(yᵢ, Fₜ₋₁(xᵢ) + ε hₜ(xᵢ)) + Ω(hₜ)
+
+(ε = learning_rate or shrinkage)
+
+---
+
+### 6. Custom Loss Functions
+- Allows custom loss functions.
+- Examples:
+  - Squared Loss (Regression)
+  - Logistic Loss (Binary Classification)
+
+---
+
+### 7. System Features
+- **Parallelization**: Uses sorted block structure for efficient splits.
+- **Distributed Computing**: Multi-machine training support.
+- **Cache Optimization**: Gradient & Hessian prefetching.
+- **Out-of-Core Computation**: Disk-based training for large datasets.
