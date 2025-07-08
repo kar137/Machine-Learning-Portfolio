@@ -226,3 +226,120 @@ These optimizers adjust the learning rate automatically for each parameter.
 | **Grid Search**   | Simple, systematic                        | Very slow for large spaces             |
 | **Random Search** | Faster for large spaces, flexible          | No guarantee of optimality             |
 | **Genetic Search**| Efficient for large/complex problems       | Complex implementation, tuning needed  |
+
+
+# Hyperparameter Tuning Heuristics
+
+---
+
+## Prerequisites:
+Before starting, you must know about:
+- Metrics  
+- Grid Search  
+- Random Search  
+- Cross Validation  
+- Hyperparameters  
+
+---
+
+## Learning Objectives:
+By the end of this lesson, you should be able to:
+- Discuss common problems in hyperparameter optimization.
+- Explain tips and tricks to address those problems.
+
+---
+
+## ⚙️ What is Hyperparameter Tuning?
+Hyperparameter tuning refers to selecting the optimal hyperparameters (either manually or programmatically) to maximize model performance on validation metrics. These parameters control model behavior but cannot be learned from data.
+
+---
+
+## Common Problems in Hyperparameter Tuning:
+
+### 1. **Trusting the Defaults**
+- Default hyperparameters may not work well for every problem.
+- Example: Using default batch size of 32 for a dataset with 2 million records can result in slow convergence and poor results.
+- **Solution:** Customize hyperparameters based on data and model architecture.
+
+---
+
+### 2. **Using Wrong Metrics**
+- Wrong metric selection can lead to misleading performance evaluations.
+- Example:  
+  - Accuracy may hide poor performance in imbalanced datasets.  
+  - MSE may fail in datasets with many outliers.  
+  - Blind use of activation functions like ReLU everywhere may cause issues like exploding gradients.
+- **Solution:** Always select metrics carefully, according to the task.
+- **Example Case:** Twitter algorithm wrongly prioritized tweets due to poorly chosen metrics.
+
+---
+
+### 3. **Overfitting**
+- Overfitting happens when a model performs well on training data but poorly on unseen data.
+- Typically caused by training too much on noisy data or outliers.
+
+---
+
+### 4. **Tuning Too Few Hyperparameters**
+- Tuning only one or two hyperparameters often leads to poor results.
+- **Example:** Only tuning activation function or neuron count isn't enough; other parameters like learning rate, number of epochs, and layers also need tuning.
+
+---
+
+### 5. **Hand Tuning**
+- Manually adjusting hyperparameters based on trial-and-error.
+- **Cons:**  
+  - Time-consuming, inefficient for large models.  
+  - Humans struggle with high-dimensional parameter spaces.
+
+---
+
+### 6. **Grid Search (Drawbacks Recap)**
+- Exhaustive search through a predefined grid of hyperparameters.
+- **Cons:**  
+  - Suffers from curse of dimensionality.
+  - Extremely time-consuming for many hyperparameters.
+
+---
+
+### 7. **Random Search (Drawbacks Recap)**
+- Randomly samples hyperparameters from a defined range or distribution.
+- **Cons:**  
+  - High variance.
+  - No intelligent sampling.
+  - May miss optimal solutions.
+
+---
+
+## Tips and Tricks for Hyperparameter Tuning:
+
+### 1. **Execute Hyperparameter Optimization**
+- Always tune hyperparameters instead of using defaults.
+- **Example:** NBA betting prediction model greatly improved after hyperparameter tuning.
+
+---
+
+### 2. **Balance Multiple Metrics**
+- In some tasks, you need to balance competing metrics.
+- **Example:** Choosing a car based on both affordability and fuel efficiency requires balancing multiple metrics.
+
+---
+
+### 3. **Use Cross Validation**
+- **Tip:** Use techniques like k-fold cross-validation to ensure generalization.
+- Averaging over k-folds reduces overfitting and provides more robust performance estimation.
+
+---
+
+### 4. **Tune Model and Feature Parameters Together**
+- Don't just tune the model hyperparameters; also tune feature extraction or transformation parameters.
+- Joint tuning can maximize performance.
+
+---
+
+### 5. **Bayesian Optimization**
+- Advanced optimization strategy that builds a probabilistic model of the objective function.
+- Uses results from past trials to suggest next hyperparameter set intelligently.
+- **Pros:**  
+  - Efficient search requiring fewer trials.
+  - Flexible, suitable for complex hyperparameter spaces.
