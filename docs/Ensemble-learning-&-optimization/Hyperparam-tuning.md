@@ -156,3 +156,73 @@ To overcome limitations, **adaptive optimizers** are often used:
 - **Adam**
 
 These optimizers adjust the learning rate automatically for each parameter.
+
+
+# Hyperparameter Search in Deep Learning
+
+---
+
+## **1. Grid Search**
+- **Definition:** Exhaustive search method; tests all combinations of specified hyperparameter values in a grid-like structure.
+- **Process:**  
+  - Define range of hyperparameters.
+  - Try every combination systematically.
+  - Choose the one with best test performance.
+- **Example:**  
+  - Hyperparameters:  
+    - Learning Rate (lr): e.g., 10 values between 0.001 and 0.00001.  
+    - Batch Size (bs): powers of 2 from 8 to 1024.
+- **Pros:** Simple & systematic.
+- **Cons:**  
+  - Very time-consuming for large search spaces (combinatorial explosion).
+  - Not scalable for deep neural networks with many hyperparameters.
+
+---
+
+## **2. Random Search**
+- **Definition:** Hyperparameter values are sampled randomly from predefined distributions (e.g., uniform, Gaussian).
+- **Process:**  
+  - Define ranges for hyperparameters.
+  - Randomly sample combinations multiple times.
+  - Evaluate models and pick best.
+- **Example:**  
+  - Sample learning rate in [0.001, 0.00001] and batch size in [8, 1024] uniformly.
+  - Try 20 random samples.
+- **Pros:**  
+  - Covers wide range quickly.
+  - Often better than Grid Search for high-dimensional spaces.
+- **Cons:**  
+  - No guarantee of finding optimal hyperparameters.
+  - Still requires many trials for best results.
+
+---
+
+## **3. Genetic Grid Search (Genetic Algorithm Based Search)**
+- **Definition:** Evolution-inspired method using genetic algorithms to optimize hyperparameters.
+- **Key Concepts:**  
+  - *Individual:* A set of hyperparameters.  
+  - *Fitness:* Test performance (metric).  
+  - *Crossover:* Combine hyperparameters from selected individuals.  
+  - *Mutation:* Randomly change some hyperparameters.
+- **Steps:**  
+  1. Randomly sample initial hyperparameter sets.
+  2. Train models, evaluate fitness (test performance).
+  3. Select top-performing sets.
+  4. Perform crossover and mutation to create new sets.
+  5. Repeat until satisfactory result or max iterations reached.
+- **Pros:**  
+  - Efficient exploration of large spaces.
+  - Can find near-optimal solutions.
+- **Cons:**  
+  - Complex to implement.
+  - Still requires careful tuning of algorithm parameters.
+
+---
+
+## Quick Comparison:
+
+| Method            | Pros                                       | Cons                                   |
+|-------------------|-------------------------------------------|----------------------------------------|
+| **Grid Search**   | Simple, systematic                        | Very slow for large spaces             |
+| **Random Search** | Faster for large spaces, flexible          | No guarantee of optimality             |
+| **Genetic Search**| Efficient for large/complex problems       | Complex implementation, tuning needed  |
