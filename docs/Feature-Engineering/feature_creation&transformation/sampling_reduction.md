@@ -140,3 +140,37 @@ y = β₀ + β₁x
 - Dataset: Product sales across different quarters, cities, and product types.
 - **Roll-up**: Summarize sales per quarter.
 - **Drill-down**: Break down sales by city blocks within a quarter.
+
+# Discretization – Summary Notes
+
+## What is Discretization?
+Discretization is the process of converting **continuous data** (e.g., age: 10, 14, 32...) into **discrete categories**, **intervals**, or **concepts** (e.g., 10–20, 20–30 or Youth, Adult, Old).
+
+## 1. Histogram-Based Discretization
+
+### a. Equal-Width Binning
+- Divides range into equal-sized intervals.
+- Example: Age 0–10, 10–20, ..., 90–100
+
+### b. Equal-Frequency Binning
+- Divides data into bins with equal number of samples.
+
+**Benefits:** Reduces number of distinct values, simplifies analysis.
+
+---
+
+## 2. Clustering-Based Discretization
+- Uses **unsupervised learning** (e.g., k-means) to group data.
+- Replace actual values with corresponding **cluster labels**.
+- Works well for **numeric attributes**.
+
+---
+
+## 3. Decision Tree-Based Discretization
+- Uses **supervised learning** (e.g., ID3, CART).
+- Splits data based on labels and features.
+- Techniques: **Entropy**, **GINI index**, etc.
+- More informative as it utilizes **class labels**.
+
+### Bonus: ChiMerge (χ² method)
+- Bottom-up merging of intervals with **similar class distributions**.
